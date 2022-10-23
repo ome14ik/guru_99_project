@@ -28,16 +28,15 @@ public class TestBase {
         Properties PROP = new Properties();
         FileInputStream fis;
 
-        RegistrationPage registrationPage = new RegistrationPage();
+        protected static RegistrationPage registrationPage = new RegistrationPage();
 
         @BeforeSuite
         public void initializeDriver() throws FileNotFoundException {
-            fis = new FileInputStream("src/test/java/config/config.properties");
+            fis = new FileInputStream("src/main/java/ui_engine/config/config.properties");
             driver = DriverFactory.getDriver(BrowserType.CHROME);
             driver.manage().window().maximize();
             driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
             BasePage.setDriver(driver);
         }
 
@@ -47,8 +46,9 @@ public class TestBase {
             driver.quit();
         }
 
-        public void navigate(String URL){
-
+        public void navigate(String URL) throws IOException {
+            fis = new FileInputStream("src/main/java/ui_engine/config/config.properties");
+            PROP.load(fis);
             driver.get(PROP.getProperty(URL));
         }
 
