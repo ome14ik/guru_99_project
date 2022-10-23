@@ -14,11 +14,11 @@ public static WebDriver getDriver(BrowserType type){
 
     switch (type){
         case CHROME:
-            System.setProperty("webdriver.chrome.driver","src/main/resource/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe");
             driver = new ChromeDriver();
             break;
         case FIREFOX:
-            System.setProperty("mozila.gecko/.driver","src/main/resource/geckodriver.exe");
+            System.setProperty("mozila.gecko/.driver","src/main/resources/geckodriver.exe");
             driver = new FirefoxDriver();
             break;
         default:

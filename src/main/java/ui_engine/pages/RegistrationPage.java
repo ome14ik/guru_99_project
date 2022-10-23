@@ -35,12 +35,41 @@ public class RegistrationPage extends BasePage{
     /**
      * Click to submit button
      */
-    public void clickToSubmitButton(){
+    public void clickToSubmitButton() throws Exception {
         try{
             clickOn("//input[@type = 'submit']");
         }
         catch(Exception e){
-
+            throw new Exception("Failed to click on submit button. Error: "+ e);
         }
     }
+
+    public String getUserLogin () throws Exception {
+        try{
+            String text;
+            WebElement element = getElementByXpath("//td[contains(text() , 'User ID')]/following-sibling::td[@align = 'center']");
+
+            text = element.getText();
+
+            return text;
+        }
+        catch (Exception e){
+            throw new Exception("Exception");
+        }
+    }
+
+    public String getUserPassword () throws Exception {
+        try{
+            String text;
+            WebElement element = getElementByXpath("//td[contains(text() , 'Password')]/following-sibling::td[@align = 'center']");
+
+            text = element.getText();
+
+            return text;
+        }
+        catch (Exception e){
+            throw new Exception("Exception");
+        }
+    }
+
 }
