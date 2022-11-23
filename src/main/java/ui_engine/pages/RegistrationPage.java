@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 
 public class RegistrationPage extends BasePage{
 
+    String emailFieldElement ="//input[@onkeyup='validateEmail();']";
     /**
      * get email field element
      * @return
@@ -11,7 +12,7 @@ public class RegistrationPage extends BasePage{
      */
     private WebElement getEmailFieldElement() throws Exception {
         try{
-            return getElementByXpath("//input[@onkeyup='validateEmail();']");
+            return getElementByXpath(emailFieldElement);
         }
         catch (Exception e){
             throw new Exception("Failed to get Email field element. Error: " + e);

@@ -2,6 +2,7 @@ package api_engine.requests;
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class Request {
 
     @Test
     public void getResponseWithBasePath(){
-         var a = given().queryParam("CUSTOMER_ID", "68195")
+         ValidatableResponse a = given().queryParam("CUSTOMER_ID", "68195")
                 .queryParam("PASSWORD","1234!")
                 .queryParam("Account_No","1")
                 .baseUri(url)

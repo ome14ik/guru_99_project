@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,6 +20,38 @@ public class BasePage {
     public static void setDriver (WebDriver webDriver) {
         driver = webDriver;
     }
+    protected WebDriver getDriver(){
+        return this.driver;
+    }
+
+    /**
+     * get alert message
+     * @return
+     * @throws Exception
+     */
+    public String getAlertMessage () throws Exception {
+        try{
+            return getDriver().switchTo().alert().getText();
+        }
+        catch (Exception e){
+            throw new Exception("Impossible get alert message. Error:"+ e);
+        }
+    }
+
+    /**
+     * get alert message
+     * @return
+     * @throws Exception
+     */
+    public void acceptAlertMessage () throws Exception {
+        try{
+            getDriver().switchTo().alert().accept();
+        }
+        catch (Exception e){
+            throw new Exception("Impossible get alert message. Error:"+ e);
+        }
+    }
+
 
     public void openUrl(String url) throws Exception {
         try {
@@ -78,7 +110,7 @@ public class BasePage {
     /**
      * Click on element by xpath
      **/
-    public void clickOn(String xpath) throws Exception {
+    protected void clickOn(String xpath) throws Exception {
         try{
             getElementByXpath(xpath).click();
         }
@@ -91,7 +123,7 @@ public class BasePage {
     /**
      * Click on element by xpath
      **/
-    public void clickOn(WebElement element) throws Exception {
+    protected void clickOn(WebElement element) throws Exception {
         try{
             element.click();
         }
@@ -126,6 +158,38 @@ public class BasePage {
         }
         catch (Exception e){
             throw new Exception("Failed to get property by name '" + key + "' and value '"+ value +"'. Error:" + e);
+        }
+    }
+
+
+    /**
+     * Custom element waiter
+     * @param xPath
+     * @param waitTimeSecond
+     */
+    public void isElementDisplayed(String xPath, int waitTimeSecond) throws Exception {
+
+        LocalTime startTime = LocalTime.now();
+        while (!isElementExist(xPath)) {
+            LocalTime time = LocalTime.now();
+            if (time.getSecond() >= (startTime.getSecond()+waitTimeSecond )){
+                throw new Exception("Element still does not exist after " + waitTimeSecond + " seconds waite.");
+            }
+        }
+    }
+
+    /**
+     * Verify element is it displayed
+     * @param xPath
+     * @return
+     */
+    private boolean isElementExist(String xPath){
+        try {
+            WebElement element = getElementByXpath(xPath);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
         }
     }
 }

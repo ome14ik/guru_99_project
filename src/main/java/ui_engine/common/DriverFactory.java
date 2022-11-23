@@ -5,16 +5,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import ui_engine.Enums.driverfactory.SystemType;
 
 
 public class DriverFactory {
 
-public static WebDriver getDriver(BrowserType type){
+public static WebDriver getDriver(BrowserType type, SystemType sysType){
     WebDriver driver = null;
 
     switch (type){
         case CHROME:
-            System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", sysType != SystemType.MacOS? "src/main/resources/chromedriver.exe" : "src/main/resources/chromedriver");
             driver = new ChromeDriver();
             break;
         case FIREFOX:
